@@ -4,9 +4,6 @@ awslogs
 .. image:: https://badge.fury.io/py/awslogs.png
   :target: http://badge.fury.io/py/awslogs
 
-.. image:: https://travis-ci.org/jorgebastida/awslogs.png?branch=master
-    :target: https://travis-ci.org/jorgebastida/awslogs
-
 .. image:: https://coveralls.io/repos/jorgebastida/awslogs/badge.svg
   :target: https://coveralls.io/r/jorgebastida/awslogs
 
@@ -72,6 +69,9 @@ If you are on OSX El Capitan, use the following (Why? Check Donald Stufft's comm
 
   $ pip install awslogs --ignore-installed six
 
+You can also install it with `brew <https://brew.sh/>`_::
+
+  $ brew install awslogs
 
 
 Options
@@ -151,6 +151,37 @@ filter each of your json log lines and extract certain fields::
 This will only display the ``message`` field for each of the json log lines.
 
 
+Using third-party endpoints
+-------------
+
+If you use tools like localstack, fakes3 or other, consider to change boto3 endpoint using ``--aws-endpoint-url`` or ``AWS_REGION`` env variable.
+
+
+AWS IAM Permissions
+-------------------
+
+The required permissions to run ``awslogs`` are contained within the `CloudWatchLogsReadOnlyAccess <https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/iam-identity-based-access-control-cwl.html>`_ AWS managed permissions.
+As of 2020-01-13, these are the permissions::
+
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Action": [
+                    "logs:Describe*",
+                    "logs:Get*",
+                    "logs:List*",
+                    "logs:StartQuery",
+                    "logs:StopQuery",
+                    "logs:TestMetricFilter",
+                    "logs:FilterLogEvents"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+            }
+        ]
+    }
+
 Contribute
 -----------
 
@@ -161,7 +192,7 @@ Contribute
 
 * Send a pull request and bug the maintainer until it gets merged and published. :).
 
-For more instructions see `TESTING.rst`.
+For more instructions see `TESTING.md`.
 
 
 Helpful Links
@@ -170,6 +201,8 @@ Helpful Links
 * http://aws.amazon.com/cloudwatch/
 * https://boto.readthedocs.io/en/latest/ref/logs.html
 * http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/cloudwatch_limits.html
+
+
 
 How to provide AWS credentials to awslogs
 ------------------------------------------
